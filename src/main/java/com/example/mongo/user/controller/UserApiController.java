@@ -2,6 +2,7 @@ package com.example.mongo.user.controller;
 
 
 import com.example.mongo.user.dto.request.CreateUserRequest;
+import com.example.mongo.user.dto.request.EditUserRequest;
 import com.example.mongo.user.dto.response.UserResponse;
 import com.example.mongo.user.entity.UserDoc;
 import com.example.mongo.user.exception.ObjectParseException;
@@ -73,5 +74,18 @@ public class UserApiController {
         Page<UserDoc> users = userRepository.findAll(example, pageable);
 
         return users.getContent().stream().map(UserResponse::of).collect(Collectors.toList());
+    }
+
+    @PutMapping(UserRoutes.BY_ID)
+    public UserResponse edit(@PathVariable String id, @RequestBody EditUserRequest request) throws ObjectParseException, UserNotFoundException {
+        if (!ObjectId.isValid(id)) throw new ObjectParseException();
+
+        UserDoc userDoc = userRepository
+                .findById(new ObjectId(id))
+                .orElseThrow(UserNotFoundException::new);
+        userDoc.setFirstName(request.getFirstName());
+        userDoc.setLastName(request.getLastName());
+        userDoc = userRepository.save(userDoc);
+        return UserResponse.of(userDoc);
     }
 }
