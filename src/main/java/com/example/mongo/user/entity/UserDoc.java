@@ -1,4 +1,4 @@
-package com.example.mongo.user;
+package com.example.mongo.user.entity;
 
 import lombok.*;
 import org.bson.types.ObjectId;

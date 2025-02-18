@@ -8,6 +8,16 @@
 		<version>3.4.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+
+	<developers>
+		<developer>
+			<name>Danil Dmitrievich</name>
+			<email>mr.naydyuk2@gmail.com</email>
+			<organization>com.github.fromsiberiaq</organization>
+			<organizationUrl>https://github.com/FromSiberiq</organizationUrl>
+		</developer>
+	</developers>
+
 	<groupId>com.example</groupId>
 	<artifactId>mongo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>

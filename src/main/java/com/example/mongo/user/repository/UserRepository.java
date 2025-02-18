@@ -1,5 +1,6 @@
-package com.example.mongo.user;
+package com.example.mongo.user.repository;
 
+import com.example.mongo.user.entity.UserDoc;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
