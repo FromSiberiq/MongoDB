@@ -10,9 +10,13 @@ import com.example.mongo.user.repository.UserRepository;
 import com.example.mongo.user.routes.UserRoutes;
 import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
@@ -50,5 +54,16 @@ public class UserApiController {
 
         UserDoc userDoc = userRepository.findById(new ObjectId(id)).orElseThrow(UserNotFoundException::new);
         return UserResponse.of(userDoc);
+    }
+
+    @GetMapping(UserRoutes.SEARCH)
+    public List<UserResponse> search(
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "10") Integer size
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<UserDoc> users = userRepository.findAll(pageable);
+
+        return users.getContent().stream().map(UserResponse::of).collect(Collectors.toList());
     }
 }
